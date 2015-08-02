@@ -40,8 +40,7 @@ sequelize.sync().success(function () {
                   });
       Quiz.create({ pregunta: 'Capital de Portugal',
                     respuesta: 'Lisboa'
-                  })
-      .then(function () { console.log('Base de datos inicializada')});
+                  });
     };
   });
 });
