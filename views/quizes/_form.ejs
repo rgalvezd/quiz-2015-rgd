@@ -1,6 +1,21 @@
 <label for="preg" class="rem">Pregunta:</label>
-<input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>"/><p>
+<input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>"/><br>
 <label for="resp" class="rem">Respuesta:</label>
-<input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>"/><p>
+<input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>"/><br>
+
+<label for="tem" class="rem">Tema:</label>
+<select name="quiz[tema]" class="rem">
+  <% for (var i in tema ) {
+    var text = tema[i];
+    var selected = "";
+    if ( quiz.tema.toLowerCase() === text.toLowerCase()) {
+      selected = "selected";
+    }
+    %>
+    <option value="<%= text %>" <%= selected %>><%= text %></option>
+  <% } %>
+
+</select> <br>
+
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Salvar">
