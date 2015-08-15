@@ -32,12 +32,24 @@ app.use(function(req, res, next){
   // guardar path en session.redir para despues de login
   if(!req.path.match(/\/login|\/logout/)){
     req.session.redir = req.path;
-    
+
   }
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
   next();
 });
+
+// AutoLogout
+app.use(function(req, res, next) {
+		if (req.session.user) {
+			if (Date.now() - req.session.user.lastAccessTime > 2*60*1000) {
+				delete req.session.user;
+			} else {
+				req.session.user.lastAccessTime = Date.now();
+			}
+		}
+		next();
+	});
 
 app.use('/', routes);
 
