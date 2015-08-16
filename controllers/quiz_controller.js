@@ -21,11 +21,21 @@ exports.load = function (req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function (req, res) {
-  models.Quiz.findAll().then(
-    function (quizes) {
-      res.render('quizes/index', {quizes: quizes, errors: []});
-    }
-  ).catch(function(error) {next(error);})
+  if (req.query.search) {
+    var searchQuery = "%".concat(req.query.search.replace(" ","%")).concat("%");
+    models.Quiz.findAll({where:["lower(pregunta) like lower(?)",searchQuery]}).then(
+      function (quizes) {
+        res.render('quizes/index', {quizes: quizes, errors: []});
+      }
+    ).catch(function(error) {next(error);});
+  } else {
+    models.Quiz.findAll().then(
+      function (quizes) {
+        res.render('quizes/index', {quizes: quizes, errors: []});
+      }
+    ).catch(function(error) {next(error);})
+  }
+
 };
 
 // GET /quizes/new
